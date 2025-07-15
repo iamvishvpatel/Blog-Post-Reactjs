@@ -5,6 +5,11 @@ export const getAllPosts = async () => {
   return response.data;
 };
 
+export const getPostById = async (id: string | number) => {
+  const response = await axios.get(`/post/${id}`)
+  return response.data
+}
+
 export const createPost = (data: any) => {
   return axios.post("/post", data);
 };

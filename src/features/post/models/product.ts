@@ -1,1 +1,0 @@
-// zod model for product functionality
