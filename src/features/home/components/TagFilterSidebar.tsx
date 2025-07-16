@@ -4,7 +4,7 @@ import type { Props } from "../models"
 export const TagFilterSidebar = ({tags, selectedTagId, onSelectTag} : Props) => {
   
   return (
-    <div className="mt-6">
+    <div>
       <h2 className="text-xl font-semibold mb-4 px-2 py-1 bg-gray-100 rounded">
         Tags
       </h2>

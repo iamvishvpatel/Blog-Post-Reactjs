@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { usePostDetails } from "../hooks";
 import { PostDetailsCard } from "../pages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PostDetailsSkeleton } from "../../../components/Skeletons";
+
 
 export const PostDetails: FC = () => {
   const { id } = useParams()
@@ -10,7 +12,7 @@ export const PostDetails: FC = () => {
   const { post, loading } = usePostDetails(id)
 
 
-  if (loading) return <p className="p-8 text-gray-500">Loading...</p>;
+  if (loading) return <PostDetailsSkeleton />;
   if (!post) return <p className="p-8 text-red-500">Post not found.</p>;
 
   return (

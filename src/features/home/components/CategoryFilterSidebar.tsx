@@ -2,7 +2,7 @@ import type { CategoryProps } from "../models"
 
 export const CategoryFilterSidebar = ({categories, selectedCategoryId, onSelectCategory , loadingCategories}: CategoryProps) => {
   
-    if (loadingCategories) return <p>Loading categories...</p>;
+    if (loadingCategories) return <p className="text-gray-500">Loading categories...</p>;
   return (
     <aside className="bg-white p-4 shadow rounded-md sticky top-[100px]">
       <h2 className="text-xl font-semibold mb-4 px-2 py-1 bg-gray-100 rounded">
