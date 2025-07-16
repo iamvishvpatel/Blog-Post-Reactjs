@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllTags } from "../../../api/tags";
 import { getAllPosts, searchPostsByTagId } from "../../../api";
-import { getAllComment } from "../../../api/comment";
+import { getAllComment, searchPostsByCategoryId } from "../../../api/comment";
 
 export const useSidebarData = () => {
   const [tags, setTags] = useState([]);
@@ -12,7 +12,13 @@ export const useSidebarData = () => {
 
   const fetchByTag = (tagId: number) => {
     searchPostsByTagId(tagId).then((res) => setPosts(res.items));
-  };
+  }; 
+
+    const fetchByCategory = (id: number) => {
+      searchPostsByCategoryId(id)
+            .then((res) => setPosts(res.items))
+            .catch((err) => console.error("Filter by category failed", err))
+    };
 
   const fetchPosts = () => {
     getAllPosts()
@@ -35,5 +41,5 @@ export const useSidebarData = () => {
   }, []);
 
   return { posts, tags, recentComments, selectedTagId, setSelectedTagId,
-    fetchPosts, fetchByTag, loading };
+    fetchPosts, fetchByCategory, fetchByTag, loading };
 };

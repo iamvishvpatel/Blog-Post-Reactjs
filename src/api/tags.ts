@@ -1,6 +1,6 @@
-import axios from "axios";
+import axiosInstance from "./axios";
 
 export const getAllTags = async () => {
-  const response = await axios.get("http://localhost:3000/tag")    
+  const response = await axiosInstance.get("/tag")    
   return response.data; 
 };
