@@ -1,1 +1,4 @@
 export * from './handler'
+export * from './axios'
+export * from './posts'
+export * from './tags'

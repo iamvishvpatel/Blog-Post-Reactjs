@@ -1,10 +1,23 @@
-import { useRecentPosts } from "../Hooks/useRecentPosts";
+
+import { useSidebarData } from "../Hooks/useSidebarData";
 import PostCard from "./PostCard";
+import { RecentCommentsSidebar } from "./RecentCommentsSidebar";
+import { TagFilterSidebar } from "./TagFilterSidebar";
 
 export const HomeCompo = () => {
 
-  const { posts, loading } = useRecentPosts();
+  // const { posts, loading } = useRecentPosts();
+  const {posts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, loading} = useSidebarData()
   
+  const handleTagClick = (id: number | null) => {
+    if(id === null){
+      setSelectedTagId(null)
+      fetchPosts()
+    }else{      
+      setSelectedTagId(id);
+      fetchByTag(id);
+    }
+  };
   return (
     <div className="px-4 py-8 max-w-[1300px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -39,20 +52,17 @@ export const HomeCompo = () => {
         {/* Right Sidebar */}
         <aside className="lg:col-span-3 hidden lg:block">
           <div className="bg-white p-4 shadow rounded-md sticky top-[100px]">
-            <h2 className="text-xl font-semibold mb-4  px-2 py-1 bg-gray-100 rounded">Recent Comments</h2>
-            <ul className="text-gray-600 space-y-3 text-sm">
-              <li>“Great read!” – User1</li>
-              <li>“Thanks for sharing!” – DevMan</li>
-              <li>“Interesting points.” – Sara</li>
-            </ul>
+            <RecentCommentsSidebar comments= {recentComments} />
+            <TagFilterSidebar tags={tags} selectedTagId={selectedTagId} onSelectTag={handleTagClick} />
 
-            <h2 className="text-xl font-semibold mt-6 mb-4 px-2 py-1 bg-gray-100 rounded">Tags</h2>
-            <div className="flex flex-wrap gap-2">
-              <span className="bg-gray-100 text-sm px-2 py-1 rounded">#React</span>
-              <span className="bg-gray-100 text-sm px-2 py-1 rounded">#Design</span>
-              <span className="bg-gray-100 text-sm px-2 py-1 rounded">#News</span>
-              <span className="bg-gray-100 text-sm px-2 py-1 rounded">#AI</span>
-            </div>
+            {selectedTagId !== null && (
+              <button onClick={()=>{
+                setSelectedTagId(null)
+                fetchPosts()
+              }}
+              className="mt-3 text-sm text-blue-600 underline"
+            >Clear Filter</button>
+            )}
           </div>
         </aside>
       </div>
