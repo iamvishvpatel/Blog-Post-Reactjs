@@ -15,7 +15,6 @@ export const HomeCompo = () => {
   // const { posts, loading } = useRecentPosts();
   const { posts: FinalPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
   const posts =useFilterdPosts(FinalPosts)
-  console.log(posts, "asfavf");
   
   const { categories, selectedCategoryId, setSelectedCategoryId, loading: loadingCategories } = useCategories()
 

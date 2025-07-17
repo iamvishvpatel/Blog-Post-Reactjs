@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupUser } from "../slices";
 import toast from "react-hot-toast";
 
-export const SignupForm: FC = () => {
+export const  SignupForm: FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +34,9 @@ export const SignupForm: FC = () => {
       
         const message = typeof rawMessage === "string"
                                   ? rawMessage
-                                  : "Signup Failed"
+                                  : Array.isArray(rawMessage) 
+                                  ? rawMessage[0]
+                                  :"Signup Failed"
         toast.error(message);
       } else {
         toast.success("Signup successful!");
@@ -129,7 +131,7 @@ export const SignupForm: FC = () => {
 
         <p className="mt-5 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to="/login" className="text-orange-600 font-medium hover:underline">
+          <Link to="/auth/login" className="text-orange-600 font-medium hover:underline">
             Login as User
           </Link>
         </p>
