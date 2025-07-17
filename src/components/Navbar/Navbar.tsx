@@ -1,15 +1,13 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../../store/slices/searchSlice";
 
 const Navbar = () => {
-  const [search, setSearch] = useState("");
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      navigate(`/search?q=${encodeURIComponent(search.trim())}`);
-    }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();    
+    dispatch(setSearchQuery(e.target.value))
   };
 
   return (
@@ -53,11 +51,10 @@ const Navbar = () => {
         </NavLink>
       </div>
 
-      <form onSubmit={handleSearch} className="w-full md:w-auto">
+      <form className="w-full md:w-auto">
         <input
           type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={handleSearch}
           placeholder="Search posts..."
           className="bg-white border border-gray-300 px-4 py-2 rounded-md w-full md:w-64 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400"
         />

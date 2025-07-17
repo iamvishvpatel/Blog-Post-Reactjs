@@ -1,8 +1,13 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import { AppLayout } from "../components";
 import { PostRoutes } from "../features/post/routes";
+import { AuthRoute } from "../features/auth/routes";
 
 const routes: RouteObject[] = [
+  {
+    path: "/auth/*",
+    element: <AuthRoute />,
+  },
   {
     path: "/",
     element: <AppLayout />,

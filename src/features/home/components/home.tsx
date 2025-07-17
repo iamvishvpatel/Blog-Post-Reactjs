@@ -6,14 +6,17 @@ import { TagFilterSidebar } from "./TagFilterSidebar";
 import { CategoryFilterSidebar } from "./CategoryFilterSidebar";
 import { useCategories } from "../Hooks/useCategories";
 import { CategorySidebarSkeleton, PostCardSkeleton, RecentCommentsSidebarSkeleton, TagFilterSidebarSkeleton } from "../../../components/Skeletons";
+import { useFilterdPosts } from "../Hooks/useFilteredPosts";
 
 
 
 export const HomeCompo = () => {
 
   // const { posts, loading } = useRecentPosts();
-  const { posts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
-
+  const { posts: FinalPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
+  const posts =useFilterdPosts(FinalPosts)
+  console.log(posts, "asfavf");
+  
   const { categories, selectedCategoryId, setSelectedCategoryId, loading: loadingCategories } = useCategories()
 
   const handleTagClick = (id: number | null) => {
@@ -56,7 +59,9 @@ export const HomeCompo = () => {
                 <PostCardSkeleton key={i} />
               ))}
             </div>
-          ) : (
+          ) : posts.length === 0 ? (
+        <p className="text-gray-500">No posts found.</p>
+      ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (
                 <PostCard post={post} />
