@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllTags } from "../../../api/tags";
+import { getAllTags, type Tag } from "../../../api/tags";
 import { getAllPosts, searchPostsByTagId } from "../../../api";
 import { getAllComment, searchPostsByCategoryId } from "../../../api/comment";
 
 export const useSidebarData = () => {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [posts, setPosts] = useState([]);
   const [recentComments, setRecentComments] = useState([]);
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null);

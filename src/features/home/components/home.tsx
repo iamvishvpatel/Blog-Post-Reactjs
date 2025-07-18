@@ -9,6 +9,8 @@ import { CategorySidebarSkeleton, PostCardSkeleton, RecentCommentsSidebarSkeleto
 import { useFilterdPosts } from "../Hooks/useFilteredPosts";
 import type { HomeCompoProps } from "../models";
 import { useAuth } from "../../../context";
+import { useState } from "react";
+import { CreatePostModal } from "../../../components/modals";
 
 
 
@@ -18,6 +20,8 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
   const { posts: FinalPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
   const allposts =useFilterdPosts(FinalPosts)
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const posts = myPostsOnly && user ? allposts.filter((post)=> post.author.id === user.id) : allposts
 
   const { categories, selectedCategoryId, setSelectedCategoryId, loading: loadingCategories } = useCategories()
@@ -49,7 +53,16 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
           {loadingCategories ? (
             <CategorySidebarSkeleton />
           ) : (
-            <CategoryFilterSidebar categories={categories} selectedCategoryId={selectedCategoryId} onSelectCategory={handleCategoryClick} loadingCategories={loadingCategories} />
+            <>
+              <CategoryFilterSidebar categories={categories} selectedCategoryId={selectedCategoryId} onSelectCategory={handleCategoryClick} loadingCategories={loadingCategories} />
+
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-6 w-full bg-orange-500 text-white py-2 rounded-xl hover:bg-orange-600 transition"
+              >
+                + Create Post
+              </button>
+            </>
           )}
         </aside>
 
@@ -101,6 +114,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
           </div>
         </aside>
       </div>
+      <CreatePostModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
