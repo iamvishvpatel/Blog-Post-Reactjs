@@ -59,7 +59,7 @@ export const HomeCompo = () => {
               ))}
             </div>
           ) : posts.length === 0 ? (
-        <p className="text-gray-500">No posts found.</p>
+        <p className="text-gray-500">No posts found. Please LogIn!</p>
       ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (

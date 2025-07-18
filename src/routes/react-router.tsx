@@ -12,19 +12,15 @@ const routes: RouteObject[] = [
   },
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <AppLayout />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedRoute />,
     children: [
-      {
-        path: "/posts/*",
-        element: <PostRoutes />, // We can also manage all routes here rather than create specific route file
-      },
-      {
-        path: "/profile/*",
-        element: <ProfileRoutes />, // We can also manage all routes here rather than create specific route file
+     {
+        path: "/",
+        element: <AppLayout />,
+        children: [
+          { path: "/posts/*", element: <PostRoutes /> },
+          { path: "/profile/*", element: <ProfileRoutes /> },
+        ],
       },
     ],
   },

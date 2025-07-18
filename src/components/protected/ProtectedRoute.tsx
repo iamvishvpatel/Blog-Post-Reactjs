@@ -1,44 +1,45 @@
 import { useAuth } from "../../context";
-import { useEffect, useState, type ReactNode } from "react";
+import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-interface Props {
-  children: ReactNode;
-}
-
-export const ProtectedRoute = ({ children }: Props) => {
+export const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
-  const [showUnauthorized, setShowUnauthorized] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setShowUnauthorized(true);
-      document.body.style.overflow = "hidden";
+      setShowOverlay(true);
+      document.body.style.overflow = "hidden"; // Prevent scroll
     } else {
+      setShowOverlay(false);
       document.body.style.overflow = "auto";
     }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
   }, [isAuthenticated]);
 
-  if (!isAuthenticated && showUnauthorized) {
-    return (
-      <div className="fixed inset-0 z-50 bg-white/60 backdrop-blur-md flex items-center justify-center overflow-hidden">
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8 w-full max-w-sm text-center">
-          <h2 className="text-2xl font-bold text-red-600 mb-3">Unauthorized</h2>
-          <p className="text-gray-700 mb-5">Please login to access this page.</p>
-          <a
-            href="/auth/login"
-            className="inline-block bg-orange-500 text-white px-5 py-2 rounded hover:bg-orange-600 transition duration-200"
-          >
-            Go to Login
-          </a>
+  return (
+    <div className="relative">
+      {/* Always show the main layout */}
+      <Outlet />
+
+      {/* Unauthorized overlay */}
+      {showOverlay && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Blur + semi-white background */}
+          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10" />
+
+          {/* Centered popup */}
+          <div className="relative z-20 bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-3">Unauthorized</h2>
+            <p className="text-gray-700 mb-5">Please login to access this page.</p>
+            <a
+              href="/auth/login"
+              className="bg-orange-500 text-white px-5 py-2 rounded hover:bg-orange-600 transition duration-200"
+            >
+              Go to Login
+            </a>
+          </div>
         </div>
-      </div>
-
-    );
-  }
-
-  return <>{children}</>;
+      )}
+    </div>
+  );
 };
