@@ -9,7 +9,7 @@ import type { User } from "../features/auth/models";
 
 type AuthContextType = {
   user: User | null;
-  login: (token: string, user: User) => void;
+  login: (token: string, user: User[]) => void;
   logout: () => void;
   isAuthenticated: boolean;
 };
@@ -37,10 +37,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const login = (token: string, userData: User) => {
+  const login = (token: string, userData: User[]) => {
     localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData[0]));
+    setUser(userData[0]);
     setIsAuthenticated(true);
   };
 
@@ -60,6 +60,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  console.log(context, "context");
+  
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

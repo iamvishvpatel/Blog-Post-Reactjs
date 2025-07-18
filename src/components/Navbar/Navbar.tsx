@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchQuery } from "../../store/slices/searchSlice";
+import { useAuth } from "../../context";
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { logout, isAuthenticated} = useAuth()
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();    
@@ -51,7 +53,10 @@ const Navbar = () => {
         </NavLink>
       </div>
 
-      <form className="w-full md:w-auto">
+      
+
+      <div className="flex items-center gap-4">
+        <form className="w-full md:w-auto">
         <input
           type="text"
           onChange={handleSearch}
@@ -59,6 +64,17 @@ const Navbar = () => {
           className="bg-white border border-gray-300 px-4 py-2 rounded-md w-full md:w-64 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
       </form>
+        {isAuthenticated && (
+          <>
+            <button
+              onClick={logout}
+              className="bg-red-500 text-white px-4 py-1.5 rounded hover:bg-red-600 transition"
+            >
+              Logout
+            </button>
+          </>
+        )}
+      </div>
     </nav>
   );
 };
