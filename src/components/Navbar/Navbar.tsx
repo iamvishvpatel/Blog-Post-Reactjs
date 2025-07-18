@@ -37,17 +37,17 @@ const Navbar = () => {
               : "hover:text-orange-500"
           }
         >
-          Posts
+          MyPosts
         </NavLink>
         <NavLink
-          to="/about"
+          to="/profile"
           className={({ isActive }) =>
             isActive
               ? "text-orange-600 underline underline-offset-4"
               : "hover:text-orange-500"
           }
         >
-          About
+          Profile
         </NavLink>
       </div>
 
