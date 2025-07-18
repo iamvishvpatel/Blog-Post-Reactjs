@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PostDetailsSkeleton } from "../../../components/Skeletons";
 
 
-export const PostDetails: FC = () => {
+export const  PostDetails: FC = () => {
   const { id } = useParams()
 
   const { post, loading } = usePostDetails(id)

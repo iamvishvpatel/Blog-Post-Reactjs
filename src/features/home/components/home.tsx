@@ -7,15 +7,19 @@ import { CategoryFilterSidebar } from "./CategoryFilterSidebar";
 import { useCategories } from "../Hooks/useCategories";
 import { CategorySidebarSkeleton, PostCardSkeleton, RecentCommentsSidebarSkeleton, TagFilterSidebarSkeleton } from "../../../components/Skeletons";
 import { useFilterdPosts } from "../Hooks/useFilteredPosts";
+import type { HomeCompoProps } from "../models";
+import { useAuth } from "../../../context";
 
 
 
-export const HomeCompo = () => {
+export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
 
-  // const { posts, loading } = useRecentPosts();
+  const { user } = useAuth();
   const { posts: FinalPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
-  const posts =useFilterdPosts(FinalPosts)
+  const allposts =useFilterdPosts(FinalPosts)
   
+  const posts = myPostsOnly && user ? allposts.filter((post)=> post.author.id === user.id) : allposts
+
   const { categories, selectedCategoryId, setSelectedCategoryId, loading: loadingCategories } = useCategories()
 
   const handleTagClick = (id: number | null) => {
@@ -51,7 +55,8 @@ export const HomeCompo = () => {
 
         {/* Main Content */}
         <main className="lg:col-span-6 col-span-12">
-          <h1 className="text-2xl font-bold mb-4">Latest Blog Posts</h1>
+          <h1 className="text-2xl font-bold mb-4">
+            {myPostsOnly ? "My Posts" : "Latest Blog Posts"}</h1>
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
               {[...Array(4)].map((_, i) => (
@@ -59,7 +64,8 @@ export const HomeCompo = () => {
               ))}
             </div>
           ) : posts.length === 0 ? (
-        <p className="text-gray-500">No posts found. Please LogIn!</p>
+        <p className="text-gray-500">
+          {myPostsOnly ? "No posts found for your account.": "No posts found. Please LogIn!"}</p>
       ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (

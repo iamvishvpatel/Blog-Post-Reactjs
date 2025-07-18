@@ -1,2 +1,2 @@
 export * from "./PostDetails";
-export * from "./MyPostList"
+export * from "../../myPost/components/MyPostPage"

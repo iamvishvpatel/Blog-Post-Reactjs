@@ -5,6 +5,7 @@ export type Post = {
   createdAt: string;
   updatedAt: string;
   author: {
+    id: number;
     username: string;
   };
   updatedBy?: {

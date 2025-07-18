@@ -32,7 +32,7 @@ const Navbar = () => {
           Home
         </NavLink>
         <NavLink
-          to="/posts"
+          to="/myPosts"
           className={({ isActive }) =>
             isActive
               ? "text-orange-600 underline underline-offset-4"
