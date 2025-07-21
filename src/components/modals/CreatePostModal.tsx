@@ -7,13 +7,14 @@ import { CreatePostForm } from "../../features/createPost/components";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onPostCreated: (newPost: any) => void;
 }
 
-export const CreatePostModal = ({ isOpen, onClose }: Props) => {
+export const CreatePostModal = ({ isOpen, onClose, onPostCreated}: Props) => {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog onClose={onClose} className="relative z-50">
-        {/* Background blur */}
+
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-200"
@@ -44,7 +45,7 @@ export const CreatePostModal = ({ isOpen, onClose }: Props) => {
                   <X className="w-5 h-5 text-gray-500 hover:text-red-500" />
                 </button>
               </div>
-              <CreatePostForm />
+              <CreatePostForm  onClose={onClose} onPostCreated={onPostCreated}/>
             </Dialog.Panel>
           </Transition.Child>
         </div>

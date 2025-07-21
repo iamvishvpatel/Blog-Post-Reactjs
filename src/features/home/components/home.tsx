@@ -17,14 +17,23 @@ import { CreatePostModal } from "../../../components/modals";
 export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
 
   const { user } = useAuth();
-  const { posts: FinalPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
+  const { posts: FinalPosts,setPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
   const allposts =useFilterdPosts(FinalPosts)
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const posts = myPostsOnly && user ? allposts.filter((post)=> post.author.id === user.id) : allposts
+  const unsortedposts = myPostsOnly && user ? allposts.filter((post)=> post.author.id === user.id) : allposts
+  
+  const posts = [...unsortedposts].sort(
+    (a,b)=> new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
+
 
   const { categories, selectedCategoryId, setSelectedCategoryId, loading: loadingCategories } = useCategories()
+
+  const handlePostCreated = (newPost: any) => {    
+    setPosts((prevPosts) => [newPost.data, ...prevPosts]);
+  };
 
   const handleTagClick = (id: number | null) => {
     if (id === null) {
@@ -48,8 +57,8 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
     <div className="px-4 py-8 max-w-[1300px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        {/* Left Sidebar */}
-        <aside className="lg:col-span-3 hidden lg:block">
+
+        <aside className="lg:col-span-3 hidden lg:block top-20">
           {loadingCategories ? (
             <CategorySidebarSkeleton />
           ) : (
@@ -58,7 +67,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-6 w-full bg-orange-500 text-white py-2 rounded-xl hover:bg-orange-600 transition"
+                className="sticky top-110 mt-6 w-full bg-orange-500 text-white py-2 rounded-xl hover:bg-orange-600 transition"
               >
                 + Create Post
               </button>
@@ -82,7 +91,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
       ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (
-                <PostCard post={post} />
+                <PostCard key={post.id} post={post} />
               ))}
             </div>
           )}
@@ -114,7 +123,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
           </div>
         </aside>
       </div>
-      <CreatePostModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <CreatePostModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onPostCreated = {handlePostCreated}/>
     </div>
   );
 };

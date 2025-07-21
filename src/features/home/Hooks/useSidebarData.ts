@@ -2,23 +2,24 @@ import { useEffect, useState } from "react";
 import { getAllTags, type Tag } from "../../../api/tags";
 import { getAllPosts, searchPostsByTagId } from "../../../api";
 import { getAllComment, searchPostsByCategoryId } from "../../../api/comment";
+import { type Post } from "../../post/models";
 
 export const useSidebarData = () => {
   const [tags, setTags] = useState<Tag[]>([]);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [recentComments, setRecentComments] = useState([]);
   const [selectedTagId, setSelectedTagId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchByTag = (tagId: number) => {
     searchPostsByTagId(tagId).then((res) => setPosts(res.items));
-  }; 
+  };
 
-    const fetchByCategory = (id: number) => {
-      searchPostsByCategoryId(id)
-            .then((res) => setPosts(res.items))
-            .catch((err) => console.error("Filter by category failed", err))
-    };
+  const fetchByCategory = (id: number) => {
+    searchPostsByCategoryId(id)
+      .then((res) => setPosts(res.items))
+      .catch((err) => console.error("Filter by category failed", err));
+  };
 
   const fetchPosts = () => {
     getAllPosts()
@@ -40,6 +41,16 @@ export const useSidebarData = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return { posts, tags, recentComments, selectedTagId, setSelectedTagId,
-    fetchPosts, fetchByCategory, fetchByTag, loading };
+  return {
+    posts,
+    tags,
+    setPosts,
+    recentComments,
+    selectedTagId,
+    setSelectedTagId,
+    fetchPosts,
+    fetchByCategory,
+    fetchByTag,
+    loading,
+  };
 };

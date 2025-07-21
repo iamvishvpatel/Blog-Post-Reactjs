@@ -18,18 +18,18 @@ const PostCard = ({ post }: { post: Post }) => {
           {post.updatedBy && (
             <span><FontAwesomeIcon icon="pen-nib" className="text-gray-600 mr-1"/>Last updated by {post.updatedBy.username}</span>
           )}
-          <span><FontAwesomeIcon icon="comment" className="text-gray-600 mr-1"/>{post.comments.length} Comments</span>
+          <span><FontAwesomeIcon icon="comment" className="text-gray-600 mr-1"/>{post.comments?.length || 0} Comments</span>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
+          {(post.tags || []).map((tag) => (
             <span key={tag.name} className="bg-orange-50 text-orange-600 px-2 py-1 rounded text-xs font-medium">
               #{tag.name}
             </span>
           ))}
         </div>
 
-        {post.comments.length > 0 && (
+        {post.comments?.length > 0 && (
           <div className="mt-2 bg-gray-50 p-3 rounded-md border border-gray-200">
             <p className="font-medium text-sm text-gray-700 mb-1">💬 Recent Comments:</p>
             <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">

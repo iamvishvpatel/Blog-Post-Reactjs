@@ -15,5 +15,5 @@ export const searchPostsByTagId = async (tagId: number) => {
   return response.data
 }
 export const createPost = (data: any) => {
-  return axiosInstance.post("/post", data);
+  return axiosInstance.post("/post/create", data);
 };
