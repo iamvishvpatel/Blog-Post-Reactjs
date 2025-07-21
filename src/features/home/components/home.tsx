@@ -11,6 +11,7 @@ import type { HomeCompoProps } from "../models";
 import { useAuth } from "../../../context";
 import { useState } from "react";
 import { CreatePostModal } from "../../../components/modals";
+import toast from "react-hot-toast";
 
 
 
@@ -53,6 +54,11 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
       fetchByCategory(id);
     }
   }
+
+  const handlePostDelete = (deletedId: number)=>{
+    setPosts(prev => prev.filter(post => post.id !== deletedId))
+    toast.success("Post deleted and removed from UI!");
+  }
   return (
     <div className="px-4 py-8 max-w-[1300px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -91,7 +97,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
       ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard key={post.id} post={post} onDelete={handlePostDelete}/>
               ))}
             </div>
           )}
