@@ -14,7 +14,7 @@ export const useDeletePost = () => {
       });
 
       if (res.status === 404) throw new Error("Failed to delete");
-      toast.success("Post deleted successfully");
+      toast.success("Post deleted successfully..!");
       return true;
     } catch (err) {
       console.error(err);

@@ -17,3 +17,8 @@ export const searchPostsByTagId = async (tagId: number) => {
 export const createPost = (data: any) => {
   return axiosInstance.post("/post/create", data);
 };
+
+export const updatePost = async (postId: number, updatedData: any) =>{
+  const response = await axiosInstance.put(`/posts/edit/${postId}`, updatedData);
+  return response.data;
+}

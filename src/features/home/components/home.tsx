@@ -11,7 +11,6 @@ import type { HomeCompoProps } from "../models";
 import { useAuth } from "../../../context";
 import { useState } from "react";
 import { CreatePostModal } from "../../../components/modals";
-import toast from "react-hot-toast";
 
 
 
@@ -57,7 +56,6 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
 
   const handlePostDelete = (deletedId: number)=>{
     setPosts(prev => prev.filter(post => post.id !== deletedId))
-    toast.success("Post deleted and removed from UI!");
   }
   return (
     <div className="px-4 py-8 max-w-[1300px] mx-auto">
@@ -73,7 +71,7 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="sticky top-110 mt-6 w-full bg-orange-500 text-white py-2 rounded-xl hover:bg-orange-600 transition"
+                className="sticky top-130 mt-6 w-full bg-orange-500 text-white py-2 rounded-xl hover:bg-orange-600 transition"
               >
                 + Create Post
               </button>

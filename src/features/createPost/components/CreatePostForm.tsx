@@ -44,7 +44,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }: CreatePostFormProps) 
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 scroll-y-auto">
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">Title</label>
         <input
@@ -119,6 +119,5 @@ export const CreatePostForm = ({ onClose, onPostCreated }: CreatePostFormProps) 
         {isSubmitting ? "Submitting..." : "Create Post"}
       </button>
     </form>
-
   )
 }

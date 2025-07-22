@@ -1,9 +1,8 @@
-import { useAuth } from "../../../context";
+import type { User } from "../../auth/models";
 import PermissionList from "./PermissionList";
 
-const ProfileCard = () => {
-  const { user } = useAuth();
-  const currentUser = user;
+const ProfileCard = ({ currentUser }: { currentUser: User }) => {
+
 
   if (!currentUser) return null;
 

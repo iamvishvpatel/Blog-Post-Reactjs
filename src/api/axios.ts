@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       console.warn("Unauthorized. Redirecting to login.");
     }
-
+    // toast.error(error.response.data.message)
     if (error.response?.status === 500) {
       console.error("Server error!");
     }
