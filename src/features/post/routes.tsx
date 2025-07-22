@@ -6,6 +6,7 @@ export const PostRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/:id" index element={<PostDetails />} />
+      {/* <Route path="create-post" index element={<CreatePostPage />} /> */}
     </Routes> 
   );
 }; 

@@ -18,7 +18,14 @@ export const createPost = (data: any) => {
   return axiosInstance.post("/post/create", data);
 };
 
-export const updatePost = async (postId: number, updatedData: any) =>{
-  const response = await axiosInstance.put(`/posts/edit/${postId}`, updatedData);
-  return response.data;
+  
+
+export const updatePostApi = async(postId: number, updatedData: any) =>{
+  const user = JSON.parse(localStorage.getItem("user") || "{}")
+  const authorId = user?.id;
+  const finalData = {
+    ...updatedData, authorId
+  }
+  const {data} = await axiosInstance.put(`/post/edit/${postId}`, finalData);
+  return data;
 }

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { Post } from "../models";
 
-export const PostDetailsCard = ({ post }: { post: any }) => {
+export const PostDetailsCard = ({ post }: { post: Post[] }) => {
    
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col gap-4">

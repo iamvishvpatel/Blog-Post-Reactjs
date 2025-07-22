@@ -6,7 +6,7 @@ import { createPost } from "../../../api"
 import toast from "react-hot-toast"
 import { useAuth } from "../../../context"
 import type { CreatePostFormProps } from "../models"
-
+ 
 export const CreatePostForm = ({ onClose, onPostCreated }: CreatePostFormProps) => {
   const {
     register,
