@@ -21,11 +21,13 @@ export const createPost = (data: any) => {
   
 
 export const updatePostApi = async(postId: number, updatedData: any) =>{
-  const user = JSON.parse(localStorage.getItem("user") || "{}")
-  const authorId = user?.id;
-  const finalData = {
-    ...updatedData, authorId
-  }
-  const {data} = await axiosInstance.put(`/post/edit/${postId}`, finalData);
+  // const user = JSON.parse(localStorage.getItem("user") || "{}")
+  // const authorId = user?.id;
+  // const finalData = {
+  //   ...updatedData, authorId
+  // }
+  // console.log(updatedData, "jbgikvgui");
+  
+  const {data} = await axiosInstance.put(`/post/edit/${postId}`, updatedData);
   return data;
 }

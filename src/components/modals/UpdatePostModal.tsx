@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { X } from "lucide-react";
 import { UpdatePostForm } from "../../features/updatePost/components";
+
 interface updatePostProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,8 +11,13 @@ interface updatePostProps {
   onPostUpdated: () => void;
 }
 
-
-export const UpdatePostModal = ({ isOpen, onClose, postId, postData, onPostUpdated }: updatePostProps) => {
+export const UpdatePostModal = ({
+  isOpen,
+  onClose,
+  postId,
+  postData,
+  onPostUpdated,
+}: updatePostProps) => {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog onClose={onClose} className="relative z-50">
@@ -37,9 +43,9 @@ export const UpdatePostModal = ({ isOpen, onClose, postId, postData, onPostUpdat
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-90"
           >
-            <Dialog.Panel className="w-full max-w-xl rounded-xl bg-white p-6 shadow-xl relative">
+            <Dialog.Panel className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-xl relative scroll-smooth scrollbar-hide">
               <div className="flex justify-between items-center mb-4">
-                <Dialog.Title className="text-xl font-bold">Update Post</Dialog.Title>
+                <Dialog.Title className="text-xl font-bold text-orange-600">Update Post</Dialog.Title>
                 <button onClick={onClose}>
                   <X className="w-5 h-5 text-gray-500 hover:text-red-500" />
                 </button>

@@ -12,7 +12,7 @@ export const useUpdatePost = () => {
       toast.success("Post updated successfully!");
       onSuccess();
     } catch (error: any) {
-      console.log(error, "hello");
+      // console.log(error, "hello");
       
       toast.error(error?.response?.data?.message || "Update failed");
     } finally {
