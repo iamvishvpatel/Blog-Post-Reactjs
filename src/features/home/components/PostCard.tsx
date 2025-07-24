@@ -7,7 +7,7 @@ import { useDeletePost } from "../Hooks/useDeletePost";
 import { useUpdatePostModal } from "../../updatePost/hooks";
 import { UpdatePostModal } from "../../../components/modals";
 
-const PostCard = ({ post, onDelete }: PostCardProps) => {
+const PostCard = ({ post, onDelete, onPostUpdated }: PostCardProps) => {
   const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
 
   const { handleDelete } = useDeletePost()
@@ -17,6 +17,8 @@ const PostCard = ({ post, onDelete }: PostCardProps) => {
     const deleted = await handleDelete(post.id);
     if (deleted && onDelete) onDelete(post.id);
   }
+
+
 
   return (
     <>
@@ -108,9 +110,7 @@ const PostCard = ({ post, onDelete }: PostCardProps) => {
           onClose={closeEditModal}
           postData={selectedPost}
           postId={selectedPost.id}
-          onPostUpdated={() => {
-            console.log("Post updated");
-          }}
+          onPostUpdated={onPostUpdated}
         />
       )}
     </>

@@ -27,4 +27,5 @@ export type Post = {
 export type PostCardProps = {
   post: Post;
   onDelete?: (id: number) => void;
+  onPostUpdated:(updatedPost: Post) => void;
 };

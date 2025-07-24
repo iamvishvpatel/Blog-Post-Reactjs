@@ -1,6 +1,5 @@
 import type { Props } from "../models"
 
-
 export const TagFilterSidebar = ({tags, selectedTagId, onSelectTag} : Props) => {
   
   return (
@@ -39,3 +38,4 @@ export const TagFilterSidebar = ({tags, selectedTagId, onSelectTag} : Props) => 
     </div>
   )
 }
+ 

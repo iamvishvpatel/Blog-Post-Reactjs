@@ -1,4 +1,3 @@
-
 import { useSidebarData } from "../Hooks/useSidebarData";
 import PostCard from "./PostCard";
 import { RecentCommentsSidebar } from "./RecentCommentsSidebar";
@@ -11,6 +10,7 @@ import type { HomeCompoProps } from "../models";
 import { useAuth } from "../../../context";
 import { useState } from "react";
 import { CreatePostModal } from "../../../components/modals";
+import type { Post } from "../../post/models";
 
 
 
@@ -57,6 +57,13 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
   const handlePostDelete = (deletedId: number)=>{
     setPosts(prev => prev.filter(post => post.id !== deletedId))
   }
+
+  const handlePostUpdated = (updatedPost: any) => {
+      console.log(updatedPost, "sdgsgsd");
+      setPosts((prevPosts: Post[]) =>
+        prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+      );
+    };
   return (
     <div className="px-4 py-8 max-w-[1300px] mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -79,7 +86,6 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
           )}
         </aside>
 
-        {/* Main Content */}
         <main className="lg:col-span-6 col-span-12">
           <h1 className="text-2xl font-bold mb-4">
             {myPostsOnly ? "My Posts" : "Latest Blog Posts"}</h1>
@@ -95,13 +101,13 @@ export const HomeCompo = ({myPostsOnly = false}: HomeCompoProps) => {
       ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-1  gap-6">
               {posts.map((post) => (
-                <PostCard key={post.id} post={post} onDelete={handlePostDelete}/>
+                <PostCard key={post.id} post={post} onDelete={handlePostDelete} onPostUpdated={handlePostUpdated}/>
               ))}
             </div>
           )}
         </main>
 
-        {/* Right Sidebar */}
+
         <aside className="lg:col-span-3 hidden lg:block">
           <div className="bg-white p-4 shadow rounded-md sticky top-[100px]">
             {loading  ? (

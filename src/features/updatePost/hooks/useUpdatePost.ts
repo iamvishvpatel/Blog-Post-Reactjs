@@ -4,12 +4,14 @@ import { updatePostApi } from "../../../api";
 
 export const useUpdatePost = () => {
   const [loading, setLoading] = useState(false);
-
-  const handleUpdatePost = async (postId: number, formData: any, onSuccess: () => void) => {
+  const handleUpdatePost = async (postId: number, formData: any, onPostUpdated:any, onSuccess: () => void, ) => {
     setLoading(true);
     try {
-      await updatePostApi(postId, formData);
+      const {updated} = await updatePostApi(postId, formData);
       toast.success("Post updated successfully!");
+      onPostUpdated(updated)
+      console.log("fetch done");
+      
       onSuccess();
     } catch (error: any) {
       // console.log(error, "hello");

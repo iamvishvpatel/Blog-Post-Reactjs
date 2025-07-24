@@ -49,9 +49,9 @@ export const UpdatePostForm = ({
 
   };
 
-    handleUpdatePost(postId, cleanedData, () => {
-      onPostUpdated(); 
+    handleUpdatePost(postId, cleanedData,onPostUpdated, () => {
       onClose(); 
+
     });
   };
 

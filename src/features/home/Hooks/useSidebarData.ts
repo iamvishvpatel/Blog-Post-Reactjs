@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllTags, type Tag } from "../../../api/tags";
-import { getAllPosts, searchPostsByTagId } from "../../../api";
-import { getAllComment, searchPostsByCategoryId } from "../../../api/comment";
+import { getAllComment, getAllPosts, getAllTags, searchPostsByCategoryId, searchPostsByTagId, type Tag } from "../../../api";
 import { type Post } from "../../post/models";
 
 export const useSidebarData = () => {

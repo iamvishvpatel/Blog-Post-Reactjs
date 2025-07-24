@@ -20,15 +20,13 @@ export const LoginForm = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginUser(data);
-      console.log(response, "asfff");
+
       
       const { access_token, user } = response;
       login(access_token, user);
       toast.success("Login successful!");
       navigate("/");
-    } catch (err: any) {
-      console.log(err, "-------");
-      
+    } catch (err: any) {      
       const msg =
         err?.response?.data?.message ||
         "Login failed. Please check your credentials.";

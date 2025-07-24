@@ -2,13 +2,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { X } from "lucide-react";
 import { UpdatePostForm } from "../../features/updatePost/components";
+import type { Post } from "../../features/post/models";
 
 interface updatePostProps {
   isOpen: boolean;
   onClose: () => void;
   postId: number;
   postData: any;
-  onPostUpdated: () => void;
+  onPostUpdated: (updatedPost: Post) => void;
 }
 
 export const UpdatePostModal = ({
