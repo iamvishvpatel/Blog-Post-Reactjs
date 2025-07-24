@@ -1,7 +1,7 @@
 export type Post = {
   id: number;
   title: string;
-  content?: string | null;
+  content?: string ;
   createdAt: string;
   updatedAt: string;
   author: {
@@ -12,9 +12,10 @@ export type Post = {
     username: string;
   };
   category: {
+    id: number;
     name: string;
   };
-  tags: { name: string }[];
+  tags: { id: number, name: string }[];
   comments: {
     id: number;
     content: string;

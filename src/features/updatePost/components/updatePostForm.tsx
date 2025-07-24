@@ -2,15 +2,14 @@ import { useForm } from "react-hook-form";
 import { useUpdatePost } from "../hooks/useUpdatePost";
 import { useEffect } from "react";
 import { usefetchData } from "../../createPost/hooks";
-import type { updatedPostProps } from "../models";
 import type { PostFromData } from "../../createPost/validation/createPost";
+import { usePostUpdateContext } from "../../../context";
 
-export const UpdatePostForm = ({
-  postId,
-  defaultValues,
-  onClose,
-  onPostUpdated
-}: updatedPostProps) => {
+export const UpdatePostForm = () => {
+  const { postData: defaultValues, onClose } = usePostUpdateContext();
+  const { handleUpdatePost, loading } = useUpdatePost();
+  const { categories, tags } = usefetchData();
+  
   const {
     register,
     handleSubmit,
@@ -25,8 +24,6 @@ export const UpdatePostForm = ({
     }
   });
 
-  const { handleUpdatePost, loading } = useUpdatePost();
-  const { categories, tags } = usefetchData();
 
   useEffect(() => {
     reset({
@@ -38,21 +35,15 @@ export const UpdatePostForm = ({
   }, [defaultValues, reset]);
 
   const onSubmit = (formData: PostFromData) => {
-    // console.log(formData,defaultValues, "formData");
-    
     const cleanedData = {
-    ...formData,
-    tagIds: formData.tagIds
-      ?.filter((id) => id !== null && id !== undefined && id !== "")
-      .map(Number),
-      authorId: defaultValues.author.id 
+      ...formData,
+      tagIds: formData.tagIds
+        ?.filter((id) => id !== null && id !== undefined && id !== "")
+        .map(Number),
+      authorId: defaultValues.author.id
 
-  };
-
-    handleUpdatePost(postId, cleanedData,onPostUpdated, () => {
-      onClose(); 
-
-    });
+    };
+    handleUpdatePost(cleanedData);
   };
 
   return (

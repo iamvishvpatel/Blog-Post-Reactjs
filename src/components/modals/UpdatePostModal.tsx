@@ -2,23 +2,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { X } from "lucide-react";
 import { UpdatePostForm } from "../../features/updatePost/components";
-import type { Post } from "../../features/post/models";
+import { usePostUpdateContext } from "../../context";
 
-interface updatePostProps {
-  isOpen: boolean;
-  onClose: () => void;
-  postId: number;
-  postData: any;
-  onPostUpdated: (updatedPost: Post) => void;
-}
-
-export const UpdatePostModal = ({
-  isOpen,
-  onClose,
-  postId,
-  postData,
-  onPostUpdated,
-}: updatePostProps) => {
+export const UpdatePostModal = () => {
+  const {isOpen, onClose} = usePostUpdateContext()
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog onClose={onClose} className="relative z-50">
@@ -51,12 +38,7 @@ export const UpdatePostModal = ({
                   <X className="w-5 h-5 text-gray-500 hover:text-red-500" />
                 </button>
               </div>
-              <UpdatePostForm
-                postId={postId}
-                defaultValues={postData}
-                onClose={onClose}
-                onPostUpdated={onPostUpdated}
-              />
+              <UpdatePostForm />
             </Dialog.Panel>
           </Transition.Child>
         </div>

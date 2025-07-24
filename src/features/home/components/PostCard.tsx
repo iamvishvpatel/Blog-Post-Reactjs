@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useDeletePost } from "../Hooks/useDeletePost";
 import { useUpdatePostModal } from "../../updatePost/hooks";
 import { UpdatePostModal } from "../../../components/modals";
+import { PostUpdateContext } from "../../../context";
 
 const PostCard = ({ post, onDelete, onPostUpdated }: PostCardProps) => {
   const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
@@ -105,13 +106,9 @@ const PostCard = ({ post, onDelete, onPostUpdated }: PostCardProps) => {
         </div>
       </div>
       {isEditOpen && selectedPost && (
-        <UpdatePostModal
-          isOpen={isEditOpen}
-          onClose={closeEditModal}
-          postData={selectedPost}
-          postId={selectedPost.id}
-          onPostUpdated={onPostUpdated}
-        />
+        <PostUpdateContext.Provider value={{ postId:selectedPost.id, postData:selectedPost, onPostUpdated,onClose:closeEditModal, isOpen: isEditOpen}}>
+        <UpdatePostModal/>
+        </PostUpdateContext.Provider>
       )}
     </>
   );
