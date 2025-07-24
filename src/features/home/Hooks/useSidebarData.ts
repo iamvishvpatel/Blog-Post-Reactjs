@@ -26,35 +26,25 @@ export const useSidebarData = () => {
       .catch((err) => console.error("Filter by category failed", err));
   };
 
-  const fetchPosts = () => {
-    getAllPosts()
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.error("Failed to load posts", err));
+  const fetchPosts = async () => {
+    try {
+      const [postsRes, tagsRes, commentsRes] = await Promise.all([
+        getAllPosts(),
+        getAllTags(),
+        getAllComment(),
+      ]);
+      setPosts(postsRes.data);
+      setTags(tagsRes);
+      setRecentComments(commentsRes);
+    } catch (err) {
+      console.error("Error loading sidebar data:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    useEffect(() => {
-      const fetchAllSidebarData = async () => {
-        try {
-          setLoading(true);
-          const [postRes, tagRes, commentRes] = await Promise.all([
-            getAllPosts(),
-            getAllTags(),
-            getAllComment(),
-          ]);
-
-          setPosts(postRes.data);
-          setTags(tagRes);
-          setRecentComments(commentRes);
-        } catch (err) {
-          console.error("Failed to load sidebar data", err);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchAllSidebarData();
-    }, []);
+    fetchPosts();
   }, []);
 
   return {
