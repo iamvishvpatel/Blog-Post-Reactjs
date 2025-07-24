@@ -27,14 +27,14 @@ export const PostDetailsCard = ({ post, refreshPost }: PostDetailProps) => {
 
       {post[0].content && <p className="text-gray-700 text-lg leading-7">{post[0].content}</p>}
 
-      <div className="text-sm text-gray-500 space-x-4">
-        <span><FontAwesomeIcon icon="user" className="text-orange-600"/> {post[0].author?.username}</span>
-        <span><FontAwesomeIcon icon="layer-group" className="text-gray-600"/> {post[0].category?.name}</span>
-        <span><FontAwesomeIcon icon="clock" className="text-gray-600"/> {new Date(post[0].createdAt).toLocaleString()}</span>
+      <div className="mt-2 text-sm text-gray-500 flex flex-wrap items-center gap-4">
+        <span className="flex items-center gap-1"><FontAwesomeIcon icon="user" className="text-orange-600"/> {post[0].author?.username}</span>
+        <span className="flex items-center gap-1"><FontAwesomeIcon icon="layer-group" className="text-gray-600"/> {post[0].category?.name}</span>
+        <span className="flex items-center gap-1"><FontAwesomeIcon icon="clock" className="text-gray-600"/> {new Date(post[0].createdAt).toLocaleString()}</span>
         {post[0].updatedBy && (
-          <span><FontAwesomeIcon icon="pen-nib" className="text-gray-600"/> Updated by {post[0].updatedBy.username}</span>
+          <span className="flex items-center gap-1"><FontAwesomeIcon icon="pen-nib" className="text-gray-600"/> Updated by {post[0].updatedBy.username}</span>
         )}
-        <span><FontAwesomeIcon icon="comment" className="text-gray-600"/> {post[0].comments.length} Comments</span>
+        <span className="flex items-center gap-1"><FontAwesomeIcon icon="comment" className="text-gray-600"/> {post[0].comments.length} Comments</span>
       </div>
 
       <div className="flex flex-wrap gap-2 mt-2">

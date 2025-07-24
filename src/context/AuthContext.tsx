@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   type ReactNode,
+  useMemo,
 } from "react";
 import type { User } from "../features/auth/models";
 
@@ -51,8 +52,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(false);
   };
 
+  const value = useMemo(()=> ({user, login, logout, isAuthenticated}), [user, isAuthenticated])
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
