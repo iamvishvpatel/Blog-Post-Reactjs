@@ -1,18 +1,26 @@
-import { useEffect, useState} from "react"
-import { getPostById } from "../../../api/posts"
+import { useEffect, useState } from "react";
+import type { Post } from "../models";
+import { getPostById } from "../../../api";
 
+export const usePostDetails = (postId: number) => {
+  const [post, setPost] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-export const usePostDetails = (id: string | undefined) => {
-  const [post, setPost] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(()=>{
-    if(id){
-      getPostById(id)
-            .then((res) => setPost(res))
-            .catch((err) => console.log("Error loading post:", err))
-            .finally(() => setLoading(false));
+  const fetchPost = async () => {
+    try {
+      setLoading(true);
+      const res = await getPostById(postId);
+      setPost(res);
+    } catch (err) {
+      console.error("Failed to fetch post details:", err);
+    } finally {
+      setLoading(false);
     }
-  }, [id])
-  return {post, loading}
-}
+  };
+
+  useEffect(() => {
+    fetchPost();
+  }, [postId]);
+
+  return { post, loading, fetchPost };
+};

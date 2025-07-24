@@ -1,8 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { Post } from "../models";
+import type { PostDetailProps } from "../models";
+import toast from "react-hot-toast";
+import { addCommentToPost } from "../../../api";
+import { useState } from "react";
 
-export const PostDetailsCard = ({ post }: { post: Post[] }) => {
-   
+export const PostDetailsCard = ({ post, refreshPost }: PostDetailProps) => {
+   const [commentText, setCommentText] = useState("");
+
+   const handleAddComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!commentText.trim()) return toast.error("Please enter a comment");
+
+    try {
+      await addCommentToPost(post[0].id, commentText);
+      toast.success("Comment added successfully");
+      refreshPost()
+      setCommentText("");
+    } catch (err) {
+      toast.error("Failed to add comment");
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col gap-4">
       <h1 className="text-3xl font-bold text-orange-600">{post[0].title}</h1>
@@ -26,6 +44,25 @@ export const PostDetailsCard = ({ post }: { post: Post[] }) => {
           </span>
         ))}
       </div>
+
+      <form
+        onSubmit={handleAddComment}
+        className="mt-6 flex flex-col sm:flex-row gap-2"
+      >
+        <input
+          type="text"
+          placeholder="Write your comment..."
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
+        <button
+          type="submit"
+          className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-orange-700"
+        >
+          Add Comment
+        </button>
+      </form>
 
       {post[0].comments && post[0].comments.length > 0 && (
         

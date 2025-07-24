@@ -8,8 +8,8 @@ import { PostDetailsSkeleton } from "../../../components/Skeletons";
 
 export const  PostDetails: FC = () => {
   const { id } = useParams()
-
-  const { post, loading } = usePostDetails(id)
+  const postId = Number(id);
+  const { post, loading, fetchPost } = usePostDetails(postId)
 
 
   if (loading) return <PostDetailsSkeleton />;
@@ -23,7 +23,7 @@ export const  PostDetails: FC = () => {
       >
         <FontAwesomeIcon icon="arrow-left" className="text-orange-600"/> Back to Home
       </Link>
-      <PostDetailsCard post={post} />
+      <PostDetailsCard post={post} refreshPost={fetchPost}/>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import axiosInstance from "./axios";
 
 export const getAllComment = async () => {
@@ -9,3 +10,15 @@ export const searchPostsByCategoryId = async (categoryId: number) =>{
   const response = await axiosInstance.post("/post/search", { categoryId: categoryId });
   return response.data
 }
+
+export const addCommentToPost = async (postId: number, content: string) => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  if (!user?.id) toast.error("User not found");
+  const res = await axiosInstance.post("/comment", {
+    content,
+    userId: user.id,
+    postId,
+  });
+
+  return res.data;
+};
