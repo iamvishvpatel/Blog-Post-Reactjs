@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAllComment, getAllPosts, getAllTags, searchPostsByCategoryId, searchPostsByTagId, type Tag } from "../../../api";
+import {
+  getAllComment,
+  getAllPosts,
+  getAllTags,
+  searchPostsByCategoryId,
+  searchPostsByTagId,
+  type Tag,
+} from "../../../api";
 import { type Post } from "../../post/models";
 
 export const useSidebarData = () => {
@@ -22,21 +29,32 @@ export const useSidebarData = () => {
   const fetchPosts = () => {
     getAllPosts()
       .then((res) => setPosts(res.data))
-      .catch((err) => console.error("Failed to load posts", err))
-      .finally(() => setLoading(false));
+      .catch((err) => console.error("Failed to load posts", err));
   };
 
   useEffect(() => {
-    fetchPosts();
-    getAllTags()
-      .then((res) => setTags(res))
-      .catch((err) => console.error("Failed to load tags", err))
-      .finally(() => setLoading(false));
+    useEffect(() => {
+      const fetchAllSidebarData = async () => {
+        try {
+          setLoading(true);
+          const [postRes, tagRes, commentRes] = await Promise.all([
+            getAllPosts(),
+            getAllTags(),
+            getAllComment(),
+          ]);
 
-    getAllComment()
-      .then((res) => setRecentComments(res))
-      .catch((err) => console.error("Failed to load comments", err))
-      .finally(() => setLoading(false));
+          setPosts(postRes.data);
+          setTags(tagRes);
+          setRecentComments(commentRes);
+        } catch (err) {
+          console.error("Failed to load sidebar data", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchAllSidebarData();
+    }, []);
   }, []);
 
   return {
