@@ -15,8 +15,8 @@ const Navbar = () => {
   return (
     <nav className="backdrop-blur-md bg-gray/80 shadow-md px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-50 border-b border-gray-200">
        <div className="flex items-center gap-2 text-2xl font-bold text-orange-500">
-        <span><img className="w-11" src="./blog-posts-logo2.png" alt="" /></span>
-        <span className="text-gray-900"><img className="w-45 mt-1" src="./MyBlogPosts.svg" alt="" /></span>
+        <span><img className="w-11" src="./blogpost3.png" alt="" /></span>
+        <span className="text-gray-900"><img className="w-45 mt-1" src="./WordNest.svg" alt="" /></span>
       </div>
 
 

@@ -5,6 +5,7 @@ import {
   getAllTags,
   searchPostsByCategoryId,
   searchPostsByTagId,
+  searchPostWithBoth,
   type Tag,
 } from "../../../api";
 import { type Post } from "../../post/models";
@@ -25,6 +26,11 @@ export const useSidebarData = () => {
       .then((res) => setPosts(res.items))
       .catch((err) => console.error("Filter by category failed", err));
   };
+ const fetchByTagAndCategory = (tagId: number, categoryId: number)=>{
+    searchPostWithBoth(tagId, categoryId)
+                  .then((res)=> setPosts(res.items))    
+                  .catch((err) => console.error("Filter by category & Tag failed", err));          
+  }
 
   const fetchPosts = async () => {
     try {
@@ -55,6 +61,7 @@ export const useSidebarData = () => {
     selectedTagId,
     setSelectedTagId,
     fetchPosts,
+    fetchByTagAndCategory,
     fetchByCategory,
     fetchByTag,
     loading,

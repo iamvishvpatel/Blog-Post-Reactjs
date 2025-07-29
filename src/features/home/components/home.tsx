@@ -17,7 +17,7 @@ import type { Post } from "../../post/models";
 export const HomeCompo = ({ myPostsOnly = false }: HomeCompoProps) => {
 
   const { user } = useAuth();
-  const { posts: FinalPosts, setPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, loading } = useSidebarData()
+  const { posts: FinalPosts, setPosts, tags, recentComments, selectedTagId, setSelectedTagId, fetchPosts, fetchByTag, fetchByCategory, fetchByTagAndCategory, loading } = useSidebarData()
   const allposts = useFilterdPosts(FinalPosts)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,29 +34,31 @@ export const HomeCompo = ({ myPostsOnly = false }: HomeCompoProps) => {
     setPosts((prevPosts) => [newPost.data, ...prevPosts]);
   };
 
-  const handleTagClick = (id: number | null) => {
-    if (id === null) {
-      setSelectedTagId(null)
-      fetchPosts()
+  const fetchPostswithFilter = (tagId: number | null, categoryId: number | null) => {
+    if (tagId && categoryId) {
+      fetchByTagAndCategory(tagId, categoryId);
+    } else if (tagId) {
+      fetchByTag(tagId);
+    } else if (categoryId) {
+      fetchByCategory(categoryId);
     } else {
-      setSelectedTagId(id);
-      fetchByTag(id);
+      fetchPosts();
     }
+  }
+
+  const handleTagClick = (id: number | null) => {
+    setSelectedTagId(id);
+    fetchPostswithFilter(id, selectedCategoryId);
   };
 
   const handleCategoryClick = (id: number | null) => {
     setSelectedCategoryId(id);
-    if (id === null) {
-      fetchPosts();
-    } else {
-      fetchByCategory(id);
-    }
-  }
+    fetchPostswithFilter(selectedTagId, id);
+  };
 
   const handlePostDelete = (deletedId: number) => {
     setPosts(prev => prev.filter(post => post.id !== deletedId))
   }
-
   const handlePostUpdated = (updatedPost: any) => {
     console.log(updatedPost, "sdgsgsd");
     setPosts((prevPosts: Post[]) =>
@@ -117,6 +119,7 @@ export const HomeCompo = ({ myPostsOnly = false }: HomeCompoProps) => {
             {selectedTagId !== null && (
               <button onClick={() => {
                 setSelectedTagId(null)
+                setSelectedCategoryId(null)
                 fetchPosts()
               }}
                 className="mt-3 text-sm text-blue-600 underline"
@@ -133,7 +136,7 @@ export const HomeCompo = ({ myPostsOnly = false }: HomeCompoProps) => {
       </div>
       <CreatePostModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onPostCreated={handlePostCreated} />
 
-      
+
     </div>
   );
 };

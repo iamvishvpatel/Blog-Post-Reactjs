@@ -23,9 +23,9 @@ const PostCard = ({ post, onDelete, onPostUpdated }: PostCardProps) => {
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-4 hover:shadow-lg transition flex flex-col justify-between h-full">
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-4 hover:shadow-lg transition flex flex-col justify-between h-full overflow-x-hidden">
         <Link to={`/posts/${post.id}`} className="block space-y-2">
-          <h3 className="text-xl font-bold text-orange-600">{post.title}</h3>
+          <h3 className="text-xl font-bold text-orange-600 text-wrap">{post.title}</h3>
 
           {post.content && (
             <p className="text-gray-700 text-sm line-clamp-3">{post.content}</p>
