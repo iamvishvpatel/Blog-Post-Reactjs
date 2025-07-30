@@ -24,8 +24,8 @@ export const SignupForm = () => {
     setLoading(true);
     try {
       const response = await signupUser(data);
-      toast.success("Signup successful!");      
-      login(response.access_token, response.created); 
+      toast.success("Signup successful!");
+      login(response.access_token, response.created);
       navigate("/auth/login");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Signup failed");
@@ -45,7 +45,7 @@ export const SignupForm = () => {
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-           <div>
+          <div>
             <label className="block text-sm font-semibold mb-1">Username</label>
             <input
               {...register("name")}
@@ -93,13 +93,13 @@ export const SignupForm = () => {
           <div>
             <label className="block text-sm font-semibold mb-1">Role</label>
             <select
-              {...register("role")}
+              {...register("roleId", { valueAsNumber: true })}
               className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-orange-500"
             >
               <option value="2">User</option>
               <option value="1">Admin</option>
             </select>
-            {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role.message}</p>}
+            {errors.roleId && <p className="text-red-500 text-sm mt-1">{errors.roleId.message}</p>}
           </div>
 
           <button

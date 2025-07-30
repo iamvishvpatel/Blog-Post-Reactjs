@@ -5,7 +5,7 @@ export const signupSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string(),
   bio: z.string().min(3, "Bio is required"),
-  role: z.string()
+  roleId: z.number()
 });
 
 export type SignupFormData = z.infer<typeof signupSchema>;
